@@ -16,8 +16,7 @@ export default function DayList(props) {
         />
       )
     });
-  // const Ahmed = allDay();
-  // console.log(Ahmed);
+
   return (
     <ul>{allDay}</ul>
   );
