@@ -14,6 +14,7 @@ import Appointment from "../src/components/Appointment/index.js"
 import Header from "../src/components/Appointment/Header.js"
 import Empty from "../src/components/Appointment/Empty.js"
 import Show from "../src/components/Appointment/Show.js"
+import Confirm from "../src/components/Appointment/Confirm.js"
 
 storiesOf("Button", module)
   .addParameters({
@@ -142,4 +143,8 @@ storiesOf("Appointment", module)
   .add("Show", () => <Show
     onEdit={action("onEdit")}
     onDelete={action("onDelete")}
+    />)
+  .add("Conirm", () => <Confirm
+    onCancel={action("onCancel")}
+    onConfirm={action("onConfirm")}
     />)
