@@ -143,6 +143,8 @@ storiesOf("Appointment", module)
   )
   .add("Empty", () => <Empty onAdd={action("onAdd")}/>)
   .add("Show", () => <Show
+    student="Lydia Miller-Jones"
+    interviewer={{id: 1, name: "Sylvia Palmer", avatar: "https://i.imgur.com/LpaY82x.png" }}
     onEdit={action("onEdit")}
     onDelete={action("onDelete")}
     />)
