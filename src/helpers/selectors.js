@@ -10,3 +10,20 @@ export function getAppointmentsForDay(state, givenDay) {
   })
   return appointmentsDetails;
 }
+
+export function getInterview(state, interview1) {
+  let currentInterviewer = {};
+  for (const key in state.appointments) {
+    const key1 = state.appointments[key];
+    if (key1.interview) {
+      if (key1.interview.interviewer === interview1.id) {
+        currentInterviewer.student = key1.interview.student;
+        currentInterviewer.interviewer = {...interview1}
+        return currentInterviewer;
+  
+      }
+    }
+  } 
+  return null;
+}
+
