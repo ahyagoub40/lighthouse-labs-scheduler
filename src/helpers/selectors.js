@@ -18,8 +18,8 @@ export function getInterview(state, interview1) {
     if (interview1 && key1.interview) {
       if (key1.interview.interviewer === interview1.interviewer) {
         currentInterviewer.student = key1.interview.student;
-        const desiredInterviewer = state.interviewers[interview1.interviewer]
-        currentInterviewer.interviewer = {...desiredInterviewer}
+        const desiredInterviewer = state.Interviewers[interview1.interviewer];
+        currentInterviewer.interviewer = {...desiredInterviewer};
         return currentInterviewer;
   
       }
