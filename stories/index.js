@@ -154,7 +154,8 @@ storiesOf("Appointment", module)
     onCancel={action("onCancel")}
     onConfirm={action("onConfirm")}
     />)
-  .add("Status", () => <Status message="Deleting"/>)
+  .add("Deleting", () => <Status message="Deleting"/>)
+  .add("Saving", () => <Status message="Saving"/>)
   .add("Error", () => <Error
     message="Could not delete appointment"
     onClose={action("onClose")}
