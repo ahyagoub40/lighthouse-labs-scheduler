@@ -4,6 +4,7 @@ import Header from "./Header";
 import Show from "./Show";
 import Empty from "./Empty";
 import Form from "./Form";
+import Confrim from "./Confirm";
 import Status from "./Status";
 import { useVisualMode } from "hooks/useVisualMode";
 
@@ -11,19 +12,30 @@ const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
 const SAVING = "SAVING";
+const DELETE = "DELETE";
+const CONFIRM = "CONFIRM";
 
 export default function Appointment(props) {
   const { mode, transition, back } = useVisualMode(props.interview ? SHOW : EMPTY);
-    function save(name, interviewer) {
-      const interview = {
-        student: name,
-        interviewer
-      };
-      transition(SAVING)
-      props.bookInterview(props.id, interview, function(){
-        transition(SHOW);
-      })
-    }
+  function save(name, interviewer) {
+    const interview = {
+      student: name,
+      interviewer
+    };
+    transition(SAVING)
+    props.bookInterview(props.id, interview, function(){
+      transition(SHOW);
+    })
+  }
+
+  function deleteAppointment() {
+    transition(DELETE)
+    
+    props.cancelInterview(props.id, function(){
+      transition(EMPTY);
+    })
+  }
+
   return (
     <article className="appointment">
       <Header time={props.time}/>
@@ -32,9 +44,17 @@ export default function Appointment(props) {
         <Show
           student={props.interview.student}
           interviewer={props.interview.interviewer}
+          onDelete={() =>transition(CONFIRM)}
         />
       )}
-      {mode === SAVING && <Status onAdd={() =>transition(SAVING)} />}
+      {mode === SAVING && <Status message="Saving" />}
+      {mode === DELETE && <Status message="Deleting" />}
+      {mode === CONFIRM && (<Confrim
+        message="Delete the appointment?"
+        onCancel={() =>transition(SHOW)}
+        onConfirm={deleteAppointment}
+       />
+      )}
       {mode === CREATE && (
         <Form
         interviewers={props.interviewers}
@@ -44,4 +64,5 @@ export default function Appointment(props) {
       )}
     </article>
   );
+  
 };
