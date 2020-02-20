@@ -18,7 +18,7 @@ export function getInterview(state, interview1) {
     if (interview1 && key1.interview) {
       if (key1.interview.interviewer === interview1.interviewer) {
         currentInterviewer.student = key1.interview.student;
-        const desiredInterviewer = state.Interviewers[interview1.interviewer];
+        const desiredInterviewer = state.interviewers[interview1.interviewer];
         currentInterviewer.interviewer = {...desiredInterviewer};
         return currentInterviewer;
   
@@ -28,3 +28,16 @@ export function getInterview(state, interview1) {
   return null;
 }
 
+export function getInterviewersForDay(state, givenDay) {
+  const activeInterviewers = state.days.filter(day => day.name === givenDay);
+  const interviewerDetails =[];
+  if (state.length === 0 || activeInterviewers.length === 0) {
+    return interviewerDetails;
+  }
+  const givenDayInterviewers = activeInterviewers[0].interviewers;
+  console.log(state);
+  givenDayInterviewers.forEach(interviewerId => {
+    interviewerDetails.push(state.interviewers[interviewerId])
+  });
+  return interviewerDetails;
+}
