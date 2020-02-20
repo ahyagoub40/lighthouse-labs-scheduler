@@ -35,7 +35,6 @@ export function getInterviewersForDay(state, givenDay) {
     return interviewerDetails;
   }
   const givenDayInterviewers = activeInterviewers[0].interviewers;
-  console.log(state);
   givenDayInterviewers.forEach(interviewerId => {
     interviewerDetails.push(state.interviewers[interviewerId])
   });

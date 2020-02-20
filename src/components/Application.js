@@ -14,12 +14,24 @@ const initialState = {
 }
 export default function Application(props) {
   const [state, setState] = useState(initialState);
-
+  
   const setDay = day => setState({ ...state, day });
   const appointmentArray = getAppointmentsForDay(state, state.day);
   const allAppointment = appointmentArray.map(appointment => {
     const todayInterview = getInterview(state, appointment.interview);
     const todayInterviewers = getInterviewersForDay(state, state.day);
+    const bookInterview = function(id, interview) {
+      console.log(id, interview);
+      const appointment = {
+        ...state.appointments[id],
+        interview: { ...interview }
+      };
+      const appointments = {
+        ...state.appointments,
+        [id]: appointment
+      };
+      setState({ ...state, appointments });
+    }
 
     return (
       <Appointment
@@ -28,6 +40,7 @@ export default function Application(props) {
         time={appointment.time}
         interview={todayInterview}
         interviewers={todayInterviewers}
+        bookInterview={bookInterview(1, {student: "Ahmed", interviewer: "Hafiz"})}
       />
     );
   });
