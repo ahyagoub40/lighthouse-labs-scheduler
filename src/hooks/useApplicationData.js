@@ -52,17 +52,6 @@ function reducer(state, action) {
 export default function useApplicationData() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const setDay = day => dispatch({type: SET_DAY, value: {day}})
-  // function updateSpotsRemaining(daysArray, action) {
-  //   return daysArray.map((item, index) => {
-  //     if (index !== action.index) {
-  //       return item
-  //     }
-  //     return {
-  //       ...item,
-  //       ...action.item
-  //     }
-  //   })
-  // }
   
   const bookInterview = function(id, interview) {
     const appointment = {
@@ -74,11 +63,18 @@ export default function useApplicationData() {
       [id]: appointment
     };
     const dayIndex = getDayIndex(id);
-    console.log(state.days[dayIndex].spots)
-    // updateSpotsRemaining(state.days, appointments) 
+    const spots = state.days[dayIndex].spots - 1
+    const day = {
+      ...state.days[dayIndex],
+      spots
+    };
+    const days = [...state.days];
+    days[dayIndex] = day;
+
     return axios.put(`/api/appointments/${id}`, appointment)
     .then(() => {
       dispatch({type: SET_INTERVIEW, value: {appointments}})
+      dispatch({type: SET_SPOT_DECREMENT, value: {days}})
     })
   }
   const cancelInterview = function(id) {
@@ -91,11 +87,18 @@ export default function useApplicationData() {
       [id]: appointment
     };
     const dayIndex = getDayIndex(id);
-    console.log(state.days[dayIndex].spots)
-    // updateSpotsRemaining(state.days, appointments) 
+    const spots = state.days[dayIndex].spots + 1
+    const day = {
+      ...state.days[dayIndex],
+      spots
+    };
+    const days = [...state.days];
+    days[dayIndex] = day;
+
     return axios.delete(`/api/appointments/${id}`, appointment)
     .then(() => {
       dispatch({type: SET_INTERVIEW, value: {appointments}})
+      dispatch({type: SET_SPOT_DECREMENT, value: {days}})
     })
   }
   
