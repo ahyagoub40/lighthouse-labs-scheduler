@@ -16,12 +16,13 @@ export default function Application(props) {
   const [state, setState] = useState(initialState);
   
   const setDay = day => setState({ ...state, day });
+  console.log(state.day);
   const appointmentArray = getAppointmentsForDay(state, state.day);
   const allAppointment = appointmentArray.map(appointment => {
     const todayInterview = getInterview(state, appointment.interview);
     const todayInterviewers = getInterviewersForDay(state, state.day);
 
-    const bookInterview = function(id, interview, cb) {
+    const bookInterview = function(id, interview) {
       const appointment = {
         ...state.appointments[id],
         interview: { ...interview }
@@ -30,16 +31,14 @@ export default function Application(props) {
         ...state.appointments,
         [id]: appointment
       };
-      return new Promise((res, rej) => {
-        axios.put(`/api/appointments/${appointment.id}`, appointment)
+
+        return axios.put(`/api/appointments/${appointment.id}`, appointment)
         .then(() => {
           setState({ ...state, appointments })
-          cb()
         })
-      });
 
     }
-    const cancelInterview = function(id,cb) {
+    const cancelInterview = function(id) {
       const appointment = {
         ...state.appointments[id],
         interview: null 
@@ -49,13 +48,11 @@ export default function Application(props) {
         [id]: appointment
       };
       console.log('here');
-      return new Promise((res, rej) => {
-        axios.delete(`/api/appointments/${id}`, appointment)
+        return axios.delete(`/api/appointments/${id}`, appointment)
         .then(() => {
           setState({ ...state, appointments })
-          cb()
         })
-      });
+        
 
     }
 

@@ -8,7 +8,8 @@ export function useVisualMode(initialMode) {
       history.pop();
       setMode(nextMode);
     } else {
-      setHistory(history.concat(nextMode));
+      // setHistory(history.concat(nextMode));
+      setHistory(mode => ([...mode, nextMode]))
       setMode(nextMode);
     }
   };
