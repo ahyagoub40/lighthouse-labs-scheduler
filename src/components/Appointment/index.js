@@ -22,14 +22,16 @@ const ERROR_DELETE = "ERROR_DELETE";
 export default function Appointment(props) {
   const { mode, transition, back } = useVisualMode(props.interview ? SHOW : EMPTY);
   function save(name, interviewer) {
-    const interview = {
-      student: name,
-      interviewer
-    };
-    transition(SAVING)
-    props.bookInterview(props.id, interview)
-    .then(() => transition(SHOW))
-    .catch(() => transition(ERROR_SAVE, true))
+    if (name && interviewer) {
+      const interview = {
+        student: name,
+        interviewer
+      };
+      transition(SAVING)
+      props.bookInterview(props.id, interview)
+      .then(() => transition(SHOW))
+      .catch(() => transition(ERROR_SAVE, true))
+    }
   }
 
   function deleteAppointment() {

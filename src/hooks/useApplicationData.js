@@ -2,23 +2,25 @@ import  { useReducer, useEffect } from "react";
 import axios from "axios";
 
 const getDayIndex = function(appointmentID) {
-  if (appointmentID / 5 <= 5 && appointmentID / 5 >= 4) {
+  const result = appointmentID / 5;
+  if (result <= 5 && result >= 4) {
     return  4;
   } 
-  if (appointmentID / 5 <= 4 && appointmentID / 5 >= 3) {
+  if (result <= 4 && result >= 3) {
     return  3;
   } 
-  if (appointmentID / 5 <= 3 && appointmentID / 5 >= 2) {
+  if (result <= 3 && result >= 2) {
     return 2;
   } 
-  if (appointmentID / 5 <= 2 && appointmentID / 5 >= 1) {
+  if (result <= 2 && result >= 1) {
     return 1;
 
   }
-  if (appointmentID / 5 <= 1) {
+  if (result <= 1) {
     return 0;
   } 
 }
+
 const initialState = {
   day: "Monday",
   days: [],
@@ -49,6 +51,17 @@ function reducer(state, action) {
       );
   }
 }
+const spotsRemaining = function(state, index) {
+  const appointmentsForDay = state.days[index].appointments;
+  let counter = 5;
+  appointmentsForDay.forEach(id => {
+    if (state.appointments[id].interview) {
+      counter-- ;
+    }
+  });
+  return counter;
+}
+
 export default function useApplicationData() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const setDay = day => dispatch({type: SET_DAY, value: {day}})
@@ -63,14 +76,14 @@ export default function useApplicationData() {
       [id]: appointment
     };
     const dayIndex = getDayIndex(id);
-    const spots = state.days[dayIndex].spots - 1
+    const spots = spotsRemaining({...state, appointments}, dayIndex)
     const day = {
       ...state.days[dayIndex],
       spots
     };
     const days = [...state.days];
     days[dayIndex] = day;
-
+    
     return axios.put(`/api/appointments/${id}`, appointment)
     .then(() => {
       dispatch({type: SET_INTERVIEW, value: {appointments}})
@@ -87,14 +100,13 @@ export default function useApplicationData() {
       [id]: appointment
     };
     const dayIndex = getDayIndex(id);
-    const spots = state.days[dayIndex].spots + 1
+    const spots = spotsRemaining({...state, appointments}, dayIndex)
     const day = {
       ...state.days[dayIndex],
       spots
     };
     const days = [...state.days];
     days[dayIndex] = day;
-
     return axios.delete(`/api/appointments/${id}`, appointment)
     .then(() => {
       dispatch({type: SET_INTERVIEW, value: {appointments}})
