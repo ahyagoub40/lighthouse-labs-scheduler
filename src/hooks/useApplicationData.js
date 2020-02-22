@@ -31,8 +31,7 @@ const initialState = {
 const SET_DAY = "SET_DAY";
 const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
 const SET_INTERVIEW = "SET_INTERVIEW";
-const SET_SPOT_INCREMENT = "SET_SPOT_INCREMENT";
-const SET_SPOT_DECREMENT = "SET_SPOT_DECREMENT";
+const SET_SPOT = "SET_SPOT";
 function reducer(state, action) {
   switch (action.type) {
     case SET_DAY:
@@ -41,9 +40,7 @@ function reducer(state, action) {
       return { ...state, ...action.value }
     case SET_INTERVIEW:
       return { ...state, ...action.value }
-    case SET_SPOT_INCREMENT:
-      return { ...state, ...action.value }
-    case SET_SPOT_DECREMENT:
+    case SET_SPOT:
       return { ...state, ...action.value }
     default:
       throw new Error(
@@ -87,7 +84,7 @@ export default function useApplicationData() {
     return axios.put(`/api/appointments/${id}`, appointment)
     .then(() => {
       dispatch({type: SET_INTERVIEW, value: {appointments}})
-      dispatch({type: SET_SPOT_DECREMENT, value: {days}})
+      dispatch({type: SET_SPOT, value: {days}})
     })
   }
   const cancelInterview = function(id) {
@@ -110,7 +107,7 @@ export default function useApplicationData() {
     return axios.delete(`/api/appointments/${id}`, appointment)
     .then(() => {
       dispatch({type: SET_INTERVIEW, value: {appointments}})
-      dispatch({type: SET_SPOT_DECREMENT, value: {days}})
+      dispatch({type: SET_SPOT, value: {days}})
     })
   }
   
