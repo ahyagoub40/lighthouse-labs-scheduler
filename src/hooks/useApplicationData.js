@@ -1,6 +1,6 @@
 import  { useReducer, useEffect } from "react";
 import axios from "axios";
-
+import reducer, {SET_DAY, SET_APPLICATION_DATA, SET_INTERVIEW, SET_SPOT} from "../reducers/application";
 const getDayIndex = function(appointmentID) {
   const result = appointmentID / 5;
   if (result <= 5 && result >= 4) {
@@ -28,26 +28,6 @@ const initialState = {
   interviewers: {}
 }
 
-const SET_DAY = "SET_DAY";
-const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
-const SET_INTERVIEW = "SET_INTERVIEW";
-const SET_SPOT = "SET_SPOT";
-function reducer(state, action) {
-  switch (action.type) {
-    case SET_DAY:
-      return { ...state, ...action.value }
-    case SET_APPLICATION_DATA:
-      return { ...state, ...action.value }
-    case SET_INTERVIEW:
-      return { ...state, ...action.value }
-    case SET_SPOT:
-      return { ...state, ...action.value }
-    default:
-      throw new Error(
-        `Tried to reduce with unsupported action type: ${action.type}`
-      );
-  }
-}
 const spotsRemaining = function(state, index) {
   const appointmentsForDay = state.days[index].appointments;
   let counter = 5;

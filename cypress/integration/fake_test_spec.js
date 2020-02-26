@@ -1,12 +1,32 @@
+// if (ENV === "development" || ENV === "test") {
+//   Promise.all([
+//     read(path.resolve(__dirname, `db/schema/create.sql`)),
+//     read(path.resolve(__dirname, `db/schema/${ENV}.sql`))
+//   ])
+//     .then(([create, seed]) => {
+//       app.get("/api/debug/reset", (request, response) => {
+//         db.query(create)
+//           .then(() => db.query(seed))
+//           .then(() => {
+//             console.log("Database Reset");
+//             response.status(200).send("Database Reset");
+//           });
+//       });
+//     })
+//     .catch(error => {
+//       console.log(`Error setting up the reset route: ${error}`);
+//     });
+// }
+
 describe("navigation", () => {
   it("should visit root", () => {
     cy.visit("/");
   });
   it("should navigate to Tuesday", () => {
     cy.visit("/");
-    cy.get("li").contains("Tuesday").click();
+    cy.contains("[data-testid=day]", "Tuesday").click();
     cy.get("li", {value:"Tuesday"})
-      .should("have.css", "background-color", "rgb(242, 242, 242)");
+      .should("have.class", "day-list__item--selected");
   });
 })
     // beforeEach(() => {
