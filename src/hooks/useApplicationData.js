@@ -30,7 +30,7 @@ const initialState = {
 
 const spotsRemaining = function(state, index) {
   const appointmentsForDay = state.days[index].appointments;
-  let counter = 5;
+  let counter = appointmentsForDay.length;
   appointmentsForDay.forEach(id => {
     if (state.appointments[id].interview) {
       counter-- ;

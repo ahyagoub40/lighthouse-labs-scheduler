@@ -36,7 +36,7 @@ describe("Application", () => {
     const { container } = render(<Application />);
     await waitForElement(() => getByText(container, "Archie Cohen"))
     const appointment = getAllByTestId(container, "appointment").find(
-      appointment => queryByText(appointment, "Archie Cohen")
+      appointment => queryByText(appointment, "Archie Cohe5")
     );
     fireEvent.click(getByAltText(appointment, "Delete"));
     expect(getByText(appointment, "Delete the appointment?")).toBeInTheDocument();
