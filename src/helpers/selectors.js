@@ -13,15 +13,13 @@ export function getAppointmentsForDay(state, givenDay) {
 
 export function getInterview(state, interview1) {
   let currentInterview = {};
-  for (const key in state.appointments) {
-    const key1 = state.appointments[key];
-    if (interview1 && key1.interview) {
-      if (key1.interview.interviewer === interview1.interviewer) {
+  if (interview1) {
+    for (const key in state.interviewers) {
+      const key1 = state.interviewers[key];
+      if (key1.id === interview1.interviewer) {
         currentInterview.student = interview1.student;
-        const desiredInterviewer = state.interviewers[interview1.interviewer];
-        currentInterview.interviewer = {...desiredInterviewer};
+        currentInterview.interviewer = {...key1}
         return currentInterview;
-  
       }
     }
   } 
