@@ -12,21 +12,22 @@ export function getAppointmentsForDay(state, givenDay) {
 }
 
 export function getInterview(state, interview1) {
-  let currentInterviewer = {};
+  let currentInterview = {};
   for (const key in state.appointments) {
     const key1 = state.appointments[key];
     if (interview1 && key1.interview) {
       if (key1.interview.interviewer === interview1.interviewer) {
-        currentInterviewer.student = key1.interview.student;
+        currentInterview.student = interview1.student;
         const desiredInterviewer = state.interviewers[interview1.interviewer];
-        currentInterviewer.interviewer = {...desiredInterviewer};
-        return currentInterviewer;
+        currentInterview.interviewer = {...desiredInterviewer};
+        return currentInterview;
   
       }
     }
   } 
   return null;
 }
+
 
 export function getInterviewersForDay(state, givenDay) {
   const activeInterviewers = state.days.filter(day => day.name === givenDay);

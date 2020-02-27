@@ -53,6 +53,7 @@ export default function useApplicationData() {
       [id]: appointment
     };
     const dayIndex = getDayIndex(id);
+    
     const spots = spotsRemaining({...state, appointments}, dayIndex)
     const day = {
       ...state.days[dayIndex],
