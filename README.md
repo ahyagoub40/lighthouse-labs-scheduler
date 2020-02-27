@@ -21,3 +21,7 @@ npm test
 ```sh
 npm run storybook
 ```
+## ScreenShots
+!["Delete mode"](https://github.com/ahyagoub40/lighthouse-labs-scheduler/blob/master/docs/Delete%20mode.png?raw=true)
+!["Creating appointments"](https://github.com/ahyagoub40/lighthouse-labs-scheduler/blob/master/docs/creating%20appointments.png?raw=true)
+!["showing appointments"](https://github.com/ahyagoub40/lighthouse-labs-scheduler/blob/master/docs/showing%20appointments.png?raw=true)
